@@ -1,0 +1,17 @@
+pluginManagement {
+    repositories {
+        maven { url "https://maven.fabricmc.net/" }
+        maven { url "https://maven.neoforged.net/releases" }
+        mavenCentral()
+    }
+}
+
+plugins {
+    id "fabric-loom" version "1.6-SNAPSHOT"
+    id "maven-publish"
+}
+
+version = project.gradle.parent.version
+archivesBaseName = "KingClient"
+
+RootProject.name = "KingClient"
