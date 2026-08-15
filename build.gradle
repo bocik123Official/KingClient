@@ -13,10 +13,6 @@ repositories {
     mavenCentral()
 }
 
-loom {
-    accessWidenerPath = file("src/main/resources/kingclient.accesswidener")
-}
-
 dependencies {
     minecraft "com.mojang:minecraft:1.21.5"
     mappings "net.fabricmc:yarn:1.21.5+build.3"
