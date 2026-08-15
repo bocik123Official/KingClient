@@ -9,7 +9,6 @@ pluginManagement {
 
 plugins {
     id "fabric-loom" version "1.6-SNAPSHOT"
-    id "maven-publish" version "1.2.1"
 }
 
 rootProject.name = "KingClient"
