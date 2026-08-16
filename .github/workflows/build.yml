@@ -4,6 +4,19 @@ on:
   push:
     branches: [ master ]
   workflow_dispatch:
+    inputs:
+      minecraft-version:
+        description: 'Wersja Minecraft'
+        required: true
+        default: '1.20.4'
+        type: choice
+        options:
+          - '1.8.9'
+          - '1.19.4'
+          - '1.20.1'
+          - '1.20.4'
+          - '1.21.1'
+          - '1.22.1'
 
 jobs:
   build:
@@ -25,10 +38,10 @@ jobs:
         gradle-version: 8.5
     
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build -PmcVersion=${{ github.event.inputs.minecraft-version }}
     
     - name: Upload JAR artifact
       uses: actions/upload-artifact@v4
       with:
-        name: KingClient
-        path: build/libs/KingClient-1.0.0.jar
+        name: KingClient-${{ github.event.inputs.minecraft-version }}
+        path: build/libs/KingClient-*.jar

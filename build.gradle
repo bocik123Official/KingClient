@@ -2,11 +2,54 @@ plugins {
     id "fabric-loom"
 }
 
-version = "1.0.0"
+def mcVersion = project.findProperty("mcVersion") ?: "1.20.4"
+
+def versions = [
+    "1.8.9": [
+        minecraft: "1.8.9",
+        yarn: "1.8.9+build.1",
+        loader: "0.16.9",
+        api: "0.94.0+1.8.9"
+    ],
+    "1.19.4": [
+        minecraft: "1.19.4",
+        yarn: "1.19.4+build.4",
+        loader: "0.14.21",
+        api: "0.76.0+1.19.4"
+    ],
+    "1.20.1": [
+        minecraft: "1.20.1",
+        yarn: "1.20.1+build.10",
+        loader: "0.14.23",
+        api: "0.86.1+1.20.1"
+    ],
+    "1.20.4": [
+        minecraft: "1.20.4",
+        yarn: "1.20.4+build.3",
+        loader: "0.15.11",
+        api: "0.96.0+1.20.4"
+    ],
+    "1.21.1": [
+        minecraft: "1.21.1",
+        yarn: "1.21.1+build.3",
+        loader: "0.15.11",
+        api: "0.100.1+1.21.1"
+    ],
+    "1.22.1": [
+        minecraft: "1.22.1",
+        yarn: "1.22.1+build.2",
+        loader: "0.15.11",
+        api: "0.100.1+1.21.1"
+    ]
+]
+
+def selectedVersion = versions[mcVersion]
+
+version = "1.0.0-${mcVersion}"
 group = "com.kingclient"
 
 base {
-    archivesName = "KingClient"
+    archivesName = "KingClient-${mcVersion}"
 }
 
 repositories {
@@ -14,16 +57,17 @@ repositories {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.20.4"
-    mappings "net.fabricmc:yarn:1.20.4+build.3"
-    modImplementation "net.fabricmc:fabric-loader:0.15.11"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.96.0+1.20.4"
+    minecraft "com.mojang:minecraft:${selectedVersion.minecraft}"
+    mappings "net.fabricmc:yarn:${selectedVersion.yarn}"
+    modImplementation "net.fabricmc:fabric-loader:${selectedVersion.loader}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${selectedVersion.api}"
 }
 
 processResources {
     inputs.property "version", project.version
+    inputs.property "mcVersion", mcVersion
     filesMatching("fabric.mod.json") {
-        expand "version": project.version
+        expand "version": project.version, "mcVersion": mcVersion
     }
 }
 
